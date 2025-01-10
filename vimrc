@@ -13,29 +13,31 @@ syntax on        		"语法高粱
 filetype on      		"自动检测文件类型
 
 "暗色主题
- "colorscheme molokai
+ colorscheme molokai
 "亮色主题
- colorscheme gruvbox
- set background=light 
+ " colorscheme gruvbox
+ " set background=light 
 
 "可选
 "set laststatus=2		" 打开状态栏
-"set cursorcolumn  " 当前列高亮
-"set expandtab      " 使用空格代替Tab键
-"set softtabstop=6  " Tab键相当于多少个空格数
-"set shiftwidth=6   " 行首自动缩进使用的空格数量
+"set cursorcolumn  		" 当前列高亮
+"set expandtab			" 使用空格代替Tab键
+"set softtabstop=6		" Tab键相当于多少个空格数
+"set shiftwidth=6		" 行首自动缩进使用的空格数量
 
 "( 插件列表开始
 call plug#begin('~/.vim/plugged') 
-"Plug 'preservim/nerdtree'       
+
 " 示例插件：NERDTree
+"Plug 'preservim/nerdtree'       
 "Plug 'scrooloose/nerdcommenter' 
-" 另一个示例插件：快速注释
-"Plug 'neoclide/coc-markdown-preview-enhanced'
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-"翻译插件
-
+"状态栏美化
+"Plug 'vim-airline/vim-airline'
+"---------------------------------------------------
+"中文文档
+Plug 'yianwillis/vimcdoc'
+"注释插件
+Plug 'tpope/vim-commentary'
 "配色方案
 Plug 'flazz/vim-colorschemes'
 
@@ -51,9 +53,11 @@ Plug 'mzlogin/vim-markdown-toc'
 " 可选增强版预览插件 iamcco/markdown-preview.vim 
 Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
+"--------------------------------------------------
 
 " 插件列表结束)
 call plug#end()
+
 
 "快捷键设置
 :map \\ o<C-[>k
@@ -64,14 +68,13 @@ call plug#end()
 "生成一个空代码块
 :map \e :tabedit error<enter>
 "添加一个显示error文件的标签页
-:map \zs ^i//<C-[>
-"将当前行注释
-:map \zd ^2x
-"删除当前行的注释
 :map \U gUawA
 "将当前单词转化成大写，并进入插入模式
 :map \u guawA
 "将当前单词转化成小写，并进入插入模式
+:map \F :!touch 
+"在当前工作目录下创建新文件
+
 :map \( ci(
 :map \[ ci[
 :map \{ ci{
@@ -94,7 +97,7 @@ call plug#end()
 "显示寄存器组的内容
 
 "参数列表快捷键
-:map \a :args<enter>
+:map \l :args<enter>
 "显示参数列表
 :map \g :args 
 "创建新的参数列表
@@ -102,6 +105,8 @@ call plug#end()
 "切换到下一个表项
 :map \p :prev<enter>
 "切换到上一个表项
+:map \a :argadd 
+"添加一个表项
 
 "标签页的快捷键
 :map \o :tabonly<enter>
@@ -111,6 +116,7 @@ call plug#end()
 :map \t :tabnew<enter>
 "创建一个新的标签页
 
+"preview-markdown快捷键
 nmap <silent> <F8> <Plug>MarkdownPreview        
 " 普通模式
 imap <silent> <F8> <Plug>MarkdownPreview        
@@ -119,3 +125,26 @@ nmap <silent> <F9> <Plug>StopMarkdownPreview
 " 普通模式
 imap <silent> <F9> <Plug>StopMarkdownPreview    
 " 插入模式
+
+"toc插件快捷键
+:map \G :GenTocGFM<enter>
+:map \R :GenTocRedcarpet<enter>
+ 
+"netrw配置
+"打开netrw的快捷键
+:map \E :Ex<enter>
+let g:netrw_liststyle = 0			"设置目录列表的样式：瘦形
+let g:netrw_winsize = 20			"设置文件浏览器窗口宽度为 20%
+let g:netrw_preview   = 1			"以垂直窗口预览文件
+let g:netrw_browse_split = 4 		"使用前一次窗口打开文件
+let g:netrw_hide = 1				"显示非隐藏文件
+let g:netrw_list_hide = '^\..*'		"隐藏以.开头的文件
+let g:netrw_banner = 0				"不显示帮助信息
+let g:netrw_localrmdir = 'trash' 	"默认的删除工具使用 trash
+let g:netrw_keepdir = 0 			"跟踪当前浏览目录为工作目录
+"可选
+"自动打开文件浏览器 netrw
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd VimEnter * :Vexplore
+" augroup END
